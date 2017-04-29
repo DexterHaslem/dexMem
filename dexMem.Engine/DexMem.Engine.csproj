@@ -7,8 +7,8 @@
     <ProjectGuid>{1FA28B3B-56F1-4CE4-B210-7E5FBD1BA2CB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DexMem.Scanner</RootNamespace>
-    <AssemblyName>dexMem.Scanner</AssemblyName>
+    <RootNamespace>DexMem.Engine</RootNamespace>
+    <AssemblyName>dexMem.Engine</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

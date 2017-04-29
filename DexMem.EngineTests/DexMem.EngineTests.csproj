@@ -7,8 +7,8 @@
     <ProjectGuid>{10DABA83-19F4-4B84-A2B8-46007E65E149}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DexMem.ScannerTests</RootNamespace>
-    <AssemblyName>DexMem.ScannerTests</AssemblyName>
+    <RootNamespace>DexMem.EngineTests</RootNamespace>
+    <AssemblyName>DexMem.EngineTests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
