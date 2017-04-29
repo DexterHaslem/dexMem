@@ -1,29 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+using static DexMem.Scanner.NativeMethods;
 
 namespace DexMem.Scanner
 {
     public class Debugee : IDisposable
     {
-        private const int ProcessPermissionFlags = NativeMethods.PROCESS_QUERY_INFORMATION | NativeMethods.PROCESS_WM_READ;
+        private const ProcessAccessFlags ProcessPermissionFlags =
+            ProcessAccessFlags.QueryInformation
+            | ProcessAccessFlags.VirtualMemoryRead
+            | ProcessAccessFlags.VirtualMemoryWrite;
 
         public Process Process { get; }
         public IntPtr DebugHandle { get; private set; }
         public bool IsOpen => DebugHandle != IntPtr.Zero;
 
         #region IDisposable native
+
         private void ReleaseUnmanagedResources()
         {
             if (IsOpen)
             {
                 // dont bother checking the return value here, always zero
-                NativeMethods.CloseHandle(DebugHandle);
+                CloseHandle(DebugHandle);
             }
             DebugHandle = IntPtr.Zero;
         }
@@ -38,6 +38,7 @@ namespace DexMem.Scanner
         {
             ReleaseUnmanagedResources();
         }
+
         #endregion
 
         public Debugee(Process process)
@@ -51,14 +52,19 @@ namespace DexMem.Scanner
                 throw new AccessViolationException("Native handle is already open for this process");
 
             // open the process w/ read access, this will require running this process as admin
-            DebugHandle = NativeMethods.OpenProcess(ProcessPermissionFlags, false, Process.Id);
+            DebugHandle = OpenProcess(ProcessPermissionFlags, false, Process.Id);
             if (DebugHandle == IntPtr.Zero)
                 Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
         }
 
         public void Close()
         {
-            var closed = NativeMethods.CloseHandle(DebugHandle);
+            if (!IsOpen)
+                throw new AccessViolationException("Native handle is not open");
+
+            var closed = CloseHandle(DebugHandle);
+            // always clear even if failed so we dont try again
+            DebugHandle = IntPtr.Zero;
             if (!closed)
                 Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
         }

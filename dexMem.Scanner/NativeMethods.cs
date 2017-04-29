@@ -11,12 +11,27 @@ namespace DexMem.Scanner
 {
     internal class NativeMethods
     {
-        public const int PROCESS_QUERY_INFORMATION = 0x0400;
         public const int MEM_COMMIT = 0x00001000;
-        public const int PAGE_READWRITE = 0x04;
-        public const int PROCESS_WM_READ = 0x0010;
 
-        [DllImport("kernel32.dll")]
+        [Flags]
+        public enum ProcessAccessFlags : uint
+        {
+            All = 0x001F0FFF,
+            Terminate = 0x00000001,
+            CreateThread = 0x00000002,
+            VirtualMemoryOperation = 0x00000008,
+            VirtualMemoryRead = 0x00000010,
+            VirtualMemoryWrite = 0x00000020,
+            DuplicateHandle = 0x00000040,
+            CreateProcess = 0x000000080,
+            SetQuota = 0x00000100,
+            SetInformation = 0x00000200,
+            QueryInformation = 0x00000400,
+            QueryLimitedInformation = 0x00001000,
+            Synchronize = 0x00100000
+        }
+
+        [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint dwSize, out int lpNumberOfBytesRead);
 
         [DllImport("kernel32.dll")]
@@ -25,8 +40,8 @@ namespace DexMem.Scanner
         [DllImport("kernel32.dll")]
         public static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, uint dwLength);
 
-        [DllImport("kernel32.dll")]
-        public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern IntPtr OpenProcess(ProcessAccessFlags flags, bool bInheritHandle, int dwProcessId);
 
         [DllImport("kernel32.dll", SetLastError=true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]

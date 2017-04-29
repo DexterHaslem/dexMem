@@ -1,13 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DexMem.Scanner;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DexMem.Scanner;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DexMem.Scanner.Tests
+namespace DexMem.ScannerTests
 {
     [TestClass]
     public class DebugeeTests
@@ -20,6 +16,17 @@ namespace DexMem.Scanner.Tests
             {
                 debugee.Open();
                 debugee.Close();
+            }
+
+            using (Debugee debugee = new Debugee(process))
+            {
+                debugee.Open();
+                // ReSharper disable once AccessToDisposedClosure
+                Assert.ThrowsException<AccessViolationException>(() => debugee.Open());
+
+                debugee.Close();
+                // ReSharper disable once AccessToDisposedClosure
+                Assert.ThrowsException<AccessViolationException>(() => debugee.Close());
             }
         }
     }
