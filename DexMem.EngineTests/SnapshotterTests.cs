@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DexMem.EngineTests
 {
     [TestClass()]
-    public class ScannerTests
+    public class SnapshotterTests
     {
         [TestMethod()]
         public void ScanTest()
@@ -22,7 +22,7 @@ namespace DexMem.EngineTests
             using (var debugee = new Debugee(notepad))
             {
                 debugee.Open();
-                var memScan = Scanner.GetMemory(debugee);
+                var memScan = Snapshotter.GetMemorySnapshot(debugee);
                 Assert.IsTrue(memScan.Count > 0);
                 Assert.IsTrue(memScan.All(m => m.Value.Contents.Length > 0));
             }

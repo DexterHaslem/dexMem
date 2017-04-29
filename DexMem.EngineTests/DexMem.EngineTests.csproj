@@ -62,7 +62,7 @@
     <Compile Include="DebugeeTests.cs" />
     <Compile Include="DifferTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScannerTests.cs" />
+    <Compile Include="SnapshotterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />

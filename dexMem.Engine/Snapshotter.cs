@@ -11,22 +11,9 @@ using static DexMem.Engine.NativeMethods;
 
 namespace DexMem.Engine
 {
-    public class Scanner
+    public class Snapshotter
     {
-        private static readonly long MinApplicationAddress;
-
-        private static readonly long MaxApplicationAddress;
-        //private static uint _pageSize;
-
-        static Scanner()
-        {
-            GetSystemInfo(out SYSTEM_INFO systemInfo);
-            MinApplicationAddress = systemInfo.minimumApplicationAddress.ToInt64();
-            MaxApplicationAddress = systemInfo.maximumApplicationAddress.ToInt64();
-            //_pageSize = systemInfo.pageSize;
-        }
-
-        public static Dictionary<IntPtr, MemoryChunk> GetMemory(Debugee target)
+        public static Dictionary<IntPtr, MemoryChunk> GetMemorySnapshot(Debugee target)
         {
             if (!target.IsOpen)
                 throw new InvalidOperationException("Debugee is not opened");
@@ -42,9 +29,9 @@ namespace DexMem.Engine
             // get all consecuitive page(s) chunks in memory for this process that have the same attributes,
             // *and* are readable, otherwise we dont care
             var chunks = new Dictionary<IntPtr, MemoryChunk>();
-            var addr = MinApplicationAddress;
+            var addr = SystemInfo.MinApplicationAddress;
 
-            while (addr <= MaxApplicationAddress)
+            while (addr <= SystemInfo.MaxApplicationAddress)
             {
                 var pAddr = new IntPtr(addr);
                 VirtualQueryEx(target.DebugHandle, pAddr, out MEMORY_BASIC_INFORMATION memInfo, 28);
