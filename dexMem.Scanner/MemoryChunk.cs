@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * dexMem 
+ * Dexter Haslem 2017
+ * see the LICENSE file for licensing details
+*/
+
+using System;
 
 namespace DexMem.Scanner
 {

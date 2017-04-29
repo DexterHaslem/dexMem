@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * dexMem 
+ * Dexter Haslem 2017
+ * see the LICENSE file for licensing details
+*/
+using System;
 using System.Diagnostics;
 using DexMem.Scanner;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,14 +16,14 @@ namespace DexMem.ScannerTests
         [TestMethod]
         public void OpenCloseTest()
         {
-            Process process = Process.GetCurrentProcess();
-            using (Debugee debugee = new Debugee(process))
+            var process = Process.GetCurrentProcess();
+            using (var debugee = new Debugee(process))
             {
                 debugee.Open();
                 debugee.Close();
             }
 
-            using (Debugee debugee = new Debugee(process))
+            using (var debugee = new Debugee(process))
             {
                 debugee.Open();
                 // ReSharper disable once AccessToDisposedClosure

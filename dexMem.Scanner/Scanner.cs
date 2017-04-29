@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * dexMem 
+ * Dexter Haslem 2017
+ * see the LICENSE file for licensing details
+*/
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -34,7 +39,7 @@ namespace DexMem.Scanner
 
         private static Dictionary<IntPtr, MemoryChunk> GetPageChunks(Debugee target)
         {
-            // get all consecuitive page chunks in memory for this process that have the same attributes,
+            // get all consecuitive page(s) chunks in memory for this process that have the same attributes,
             // *and* are readable, otherwise we dont care
             var chunks = new Dictionary<IntPtr, MemoryChunk>();
             var addr = MinApplicationAddress;
@@ -46,7 +51,7 @@ namespace DexMem.Scanner
                 // NOTE: if you only get NOACCESS ensure you're running as admin.
                 // wew lawd this makes CI builds fun!
                 if (memInfo.Protect == AllocationProtectEnum.PAGE_READWRITE
-                    && memInfo.State == StateEnum.MEM_COMMIT)
+                    && memInfo.MemoryState == MemoryStateEnum.MEM_COMMIT)
                 {
                     // we have a committed page, save this chunk to be read
                     chunks[memInfo.BaseAddress] = new MemoryChunk(memInfo.BaseAddress, memInfo.RegionSize);

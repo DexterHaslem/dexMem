@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * dexMem 
+ * Dexter Haslem 2017
+ * see the LICENSE file for licensing details
+*/
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using static DexMem.Scanner.NativeMethods;

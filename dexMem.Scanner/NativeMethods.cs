@@ -1,17 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿/*
+ * dexMem 
+ * Dexter Haslem 2017
+ * see the LICENSE file for licensing details
+*/
+using System;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DexMem.Scanner
 {
+    /// <summary>
+    /// NativeMethods contains all calls to native code via p/invoke, related structures and constants.
+    /// </summary>
     internal class NativeMethods
     {
-        public const int MEM_COMMIT = 0x00001000;
+        // ReSharper disable InconsistentNaming
 
         [Flags]
         public enum ProcessAccessFlags : uint
@@ -32,18 +36,20 @@ namespace DexMem.Scanner
         }
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint dwSize, out int lpNumberOfBytesRead);
+        public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress,
+            byte[] lpBuffer, uint dwSize, out int lpNumberOfBytesRead);
 
         [DllImport("kernel32.dll")]
         public static extern void GetSystemInfo(out SYSTEM_INFO lpSystemInfo);
 
         [DllImport("kernel32.dll")]
-        public static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, uint dwLength);
+        public static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress,
+            out MEMORY_BASIC_INFORMATION lpBuffer, uint dwLength);
 
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern IntPtr OpenProcess(ProcessAccessFlags flags, bool bInheritHandle, int dwProcessId);
 
-        [DllImport("kernel32.dll", SetLastError=true)]
+        [DllImport("kernel32.dll", SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [SuppressUnmanagedCodeSecurity]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -55,7 +61,7 @@ namespace DexMem.Scanner
             public IntPtr AllocationBase;
             public AllocationProtectEnum AllocationProtect;
             public uint RegionSize;
-            public StateEnum State;
+            public MemoryStateEnum MemoryState;
             public AllocationProtectEnum Protect;
             public TypeEnum Type;
         }
@@ -75,7 +81,7 @@ namespace DexMem.Scanner
             PAGE_WRITECOMBINE = 0x00000400
         }
 
-        public enum StateEnum : uint
+        public enum MemoryStateEnum : uint
         {
             MEM_COMMIT = 0x1000,
             MEM_FREE = 0x10000,
@@ -106,4 +112,6 @@ namespace DexMem.Scanner
             public ushort processorRevision;
         }
     }
+
+    // ReSharper enable InconsistentNaming
 }

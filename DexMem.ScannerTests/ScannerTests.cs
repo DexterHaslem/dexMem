@@ -1,4 +1,9 @@
-﻿using System.Diagnostics;
+﻿/*
+ * dexMem 
+ * Dexter Haslem 2017
+ * see the LICENSE file for licensing details
+*/
+using System.Diagnostics;
 using System.Linq;
 using DexMem.Scanner;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
