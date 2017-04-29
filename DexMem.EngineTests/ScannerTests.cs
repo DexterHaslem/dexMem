@@ -1,14 +1,14 @@
 ﻿/*
  * dexMem 
- * Dexter Haslem 2017
+ * Dexter Haslem <dmh@fastmail.com> 2017
  * see the LICENSE file for licensing details
 */
 using System.Diagnostics;
 using System.Linq;
-using DexMem.Scanner;
+using DexMem.Engine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DexMem.ScannerTests
+namespace DexMem.EngineTests
 {
     [TestClass()]
     public class ScannerTests
@@ -22,7 +22,7 @@ namespace DexMem.ScannerTests
             using (var debugee = new Debugee(notepad))
             {
                 debugee.Open();
-                var memScan = Scanner.Scanner.GetMemory(debugee);
+                var memScan = Scanner.GetMemory(debugee);
                 Assert.IsTrue(memScan.Count > 0);
                 Assert.IsTrue(memScan.All(m => m.Value.Contents.Length > 0));
             }

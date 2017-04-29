@@ -1,6 +1,6 @@
 ﻿/*
  * dexMem 
- * Dexter Haslem 2017
+ * Dexter Haslem <dmh@fastmail.com> 2017
  * see the LICENSE file for licensing details
 */
 using System;
@@ -8,7 +8,7 @@ using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace DexMem.Scanner
+namespace DexMem.Engine
 {
     /// <summary>
     /// NativeMethods contains all calls to native code via p/invoke, related structures and constants.

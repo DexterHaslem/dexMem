@@ -68,9 +68,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\dexMem.Scanner\DexMem.Scanner.csproj">
+    <ProjectReference Include="..\dexMem.Engine\DexMem.Engine.csproj">
       <Project>{1FA28B3B-56F1-4CE4-B210-7E5FBD1BA2CB}</Project>
-      <Name>DexMem.Scanner</Name>
+      <Name>DexMem.Engine</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

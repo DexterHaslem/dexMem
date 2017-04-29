@@ -1,14 +1,14 @@
 ﻿/*
  * dexMem 
- * Dexter Haslem 2017
+ * Dexter Haslem <dmh@fastmail.com> 2017
  * see the LICENSE file for licensing details
 */
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using static DexMem.Scanner.NativeMethods;
+using static DexMem.Engine.NativeMethods;
 
-namespace DexMem.Scanner
+namespace DexMem.Engine
 {
     public class Debugee : IDisposable
     {
