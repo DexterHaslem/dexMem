@@ -5,8 +5,6 @@
 */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DexMem.Engine
@@ -29,16 +27,13 @@ namespace DexMem.Engine
                     return;
                 }
 
-                // ensure size didnt change, it shouldnt but.. if they dont match dont try anything
-                // tricky
-                if (lm.Value.RegionSize != rm.RegionSize)
-                {
-                    return;
-                }
-
                 for (var offset = 0; offset < lm.Value.RegionSize; ++offset)
                 {
                     var leftVal = lm.Value.Contents[offset];
+                    // if right size changed on us, just bail early. dont think this is possible.. but..
+                    if (rm.Contents.Length <= offset)
+                        break;
+
                     var rightVal = rm.Contents[offset];
 
                     if (leftVal == rightVal)

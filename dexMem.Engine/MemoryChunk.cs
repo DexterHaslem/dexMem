@@ -25,5 +25,11 @@ namespace DexMem.Engine
             RegionSize = regionSize;
             //Contents = contents;
         }
+
+        public MemoryChunk DeepClone()
+        {
+            var ret = new MemoryChunk(BaseAddress, RegionSize) {Contents = (byte[]) Contents.Clone()};
+            return ret;
+        }
     }
 }
