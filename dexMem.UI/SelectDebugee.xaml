@@ -1,0 +1,39 @@
+﻿<Window x:Class="DexMem.SelectDebugee"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DexMem"
+        mc:Ignorable="d"
+        Title="SelectDebugee" Height="300" Width="300">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+       
+        <ListView ItemsSource="{Binding AvailableDebugees}"
+                  SelectedItem="{Binding SelectedDebugee}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="PID" Width="50" DisplayMemberBinding="{Binding Process.Id}"/>
+                    <GridViewColumn Header="Image" Width="100" DisplayMemberBinding="{Binding Process.MainModule.ModuleName}"/>
+                    <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Process.ProcessName}"/>
+                    <GridViewColumn Header="Title" Width="400" DisplayMemberBinding="{Binding Process.MainWindowTitle}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <Button Grid.Column="0" Click="OnAttachClick" IsEnabled="{Binding IsAttachEnabled}">Attach</Button>
+            <Button Grid.Column="1" Click="OnRefreshClick">Refresh</Button>
+            <Button Grid.Column="2" Click="OnExitClick">Exit</Button>
+        </Grid>
+    </Grid>
+</Window>

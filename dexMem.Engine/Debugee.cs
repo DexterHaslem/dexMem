@@ -4,7 +4,9 @@
  * see the LICENSE file for licensing details
 */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using static DexMem.Engine.NativeMethods;
 
@@ -20,6 +22,7 @@ namespace DexMem.Engine
         public Process Process { get; }
         public IntPtr DebugHandle { get; private set; }
         public bool IsOpen => DebugHandle != IntPtr.Zero;
+        public string Name => Process != null ? $"{Process.Id} {Process.ProcessName} - {Process.MainWindowTitle}" : "";
 
         #region IDisposable native
 
@@ -73,5 +76,10 @@ namespace DexMem.Engine
             if (!closed)
                 Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
         }
+
+
+        public static IEnumerable<Debugee> Available => Process.GetProcesses()
+            .OrderBy(p => p.Id)
+            .Select(p => new Debugee(p));
     }
 }
