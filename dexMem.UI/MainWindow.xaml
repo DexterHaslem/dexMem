@@ -6,7 +6,49 @@
         xmlns:local="clr-namespace:DexMem"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
+    <DockPanel LastChildFill="True">
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button>Attach/Detach</Button>
+            </ToolBar>
+        </ToolBarTray>
+        <!--<Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="E_xit" />
+            </MenuItem>
+        </Menu>-->
         
-    </Grid>
+        <StatusBar DockPanel.Dock="Bottom" Height="20">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="5*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+
+            </StatusBar.ItemsPanel>
+            
+            <StatusBarItem>
+                
+            </StatusBarItem>
+            <Separator Grid.Column="1" />
+            <StatusBarItem Grid.Column="2">
+                
+            </StatusBarItem>
+            <Separator Grid.Column="3" />
+            <StatusBarItem Grid.Column="4">
+                
+            </StatusBarItem>
+        </StatusBar>
+
+        <Grid Background="Pink">
+
+        </Grid>
+    </DockPanel>
 </Window>
