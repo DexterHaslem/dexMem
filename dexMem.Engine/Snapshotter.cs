@@ -3,8 +3,10 @@
  * Dexter Haslem <dmh@fastmail.com> 2017
  * see the LICENSE file for licensing details
 */
+
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using static DexMem.Engine.NativeMethods;
@@ -13,7 +15,7 @@ namespace DexMem.Engine
 {
     public class Snapshotter
     {
-        public static Dictionary<IntPtr, MemoryChunk> GetMemorySnapshot(Debugee target)
+        public static MemorySnapshot GetMemorySnapshot(Debugee target)
         {
             if (!target.IsOpen)
                 throw new InvalidOperationException("Debugee is not opened");
@@ -21,7 +23,10 @@ namespace DexMem.Engine
             // two step process, first we need to get all chunks of similar pages,
             // which is inherently linear, once that is done we can read em all at once
             var chunks = GetPageChunks(target);
-            return ReadPageChunkContents(target, chunks);
+            var byChunks = ReadPageChunkContents(target, chunks);
+            var totalSize = byChunks.Values.Sum(v => v.RegionSize);
+            // TODO: real base address
+            return new MemorySnapshot(byChunks, byChunks.Keys.FirstOrDefault(), totalSize, DateTime.Now);
         }
 
         private static Dictionary<IntPtr, MemoryChunk> GetPageChunks(Debugee target)

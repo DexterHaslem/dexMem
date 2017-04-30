@@ -48,6 +48,7 @@
     <Compile Include="Differ.cs" />
     <Compile Include="MemoryChunk.cs" />
     <Compile Include="MemoryDiff.cs" />
+    <Compile Include="MemorySnapshot.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Snapshotter.cs" />

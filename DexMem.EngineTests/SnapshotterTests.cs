@@ -3,6 +3,7 @@
  * Dexter Haslem <dmh@fastmail.com> 2017
  * see the LICENSE file for licensing details
 */
+
 using System.Diagnostics;
 using System.Linq;
 using DexMem.Engine;
@@ -22,9 +23,9 @@ namespace DexMem.EngineTests
             using (var debugee = new Debugee(notepad))
             {
                 debugee.Open();
-                var memScan = Snapshotter.GetMemorySnapshot(debugee);
-                Assert.IsTrue(memScan.Count > 0);
-                Assert.IsTrue(memScan.All(m => m.Value.Contents.Length > 0));
+                var snapshot = Snapshotter.GetMemorySnapshot(debugee);
+                Assert.IsTrue(snapshot.ByChunks.Count > 0);
+                Assert.IsTrue(snapshot.ByChunks.All(m => m.Value.Contents.Length > 0));
             }
             notepad.Kill();
         }

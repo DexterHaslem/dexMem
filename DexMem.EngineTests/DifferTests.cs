@@ -9,8 +9,6 @@ using DexMem.Engine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DexMem.EngineTests
 {
@@ -29,15 +27,15 @@ namespace DexMem.EngineTests
             };
 
             var testValRight = testValLeft.DeepClone();
-            testValRight.Contents = testValLeft.Contents.Select(v =>v + shift)
+            testValRight.Contents = testValLeft.Contents.Select(v => v + shift)
                 .Select(i => (byte) i) // not sure why, but no matter what prev select returns, must cast
                 .ToArray();
 
-            var left = new Dictionary<IntPtr, MemoryChunk>();
-            var right = new Dictionary<IntPtr, MemoryChunk>();
+            var left = new MemorySnapshot(new Dictionary<IntPtr, MemoryChunk>(), IntPtr.Zero, 1, DateTime.Now);
+            var right = new MemorySnapshot(new Dictionary<IntPtr, MemoryChunk>(), IntPtr.Zero, 1, DateTime.Now);
 
-            left[testAddr] = testValLeft;
-            right[testAddr] = testValRight;
+            left.ByChunks[testAddr] = testValLeft;
+            right.ByChunks[testAddr] = testValRight;
             var diffs1 = Differ.Diff(left, right);
             Assert.IsTrue(diffs1.All(d => d.Diff == shift));
 

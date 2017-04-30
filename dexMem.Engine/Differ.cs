@@ -3,7 +3,7 @@
  * Dexter Haslem <dmh@fastmail.com> 2017
  * see the LICENSE file for licensing details
 */
-using System;
+
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,12 +16,13 @@ namespace DexMem.Engine
     public class Differ
     {
         // take in the dicts directly instead of lists to avoid constant address lookups
-        public static List<MemoryDiff> Diff(Dictionary<IntPtr, MemoryChunk> left, Dictionary<IntPtr, MemoryChunk> right)
+        // TODO: consider a lightweight, flat memory address list version of this
+        public static List<MemoryDiff> Diff(MemorySnapshot left, MemorySnapshot right)
         {
             var diffs = new List<MemoryDiff>();
-            Parallel.ForEach(left, lm =>
+            Parallel.ForEach(left.ByChunks, lm =>
             {
-                if (!right.TryGetValue(lm.Key, out MemoryChunk rm))
+                if (!right.ByChunks.TryGetValue(lm.Key, out MemoryChunk rm))
                 {
                     // right side didnt have it, could have been freed, etc
                     return;

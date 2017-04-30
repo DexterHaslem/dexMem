@@ -3,6 +3,7 @@
  * Dexter Haslem <dmh@fastmail.com> 2017
  * see the LICENSE file for licensing details
 */
+
 using System;
 using System.Diagnostics;
 using DexMem.Engine;

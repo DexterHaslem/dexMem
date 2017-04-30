@@ -16,7 +16,7 @@ namespace DexMem.Engine
         public IntPtr Address { get; }
         public byte Left { get; }
         public byte Right { get; }
-        public byte Diff => (byte) (Right - Left);
+        public byte Diff => (byte) (Right - Left); // TODO: something that makes sense (this could overflow/uncheck)
 
         public MemoryDiff(IntPtr addr, byte left, byte right)
         {
