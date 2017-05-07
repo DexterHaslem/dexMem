@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using DexMem.Annotations;
 using DexMem.Engine;
 
@@ -22,6 +23,8 @@ namespace DexMem
     public partial class SelectDebugee : INotifyPropertyChanged
     {
         private Debugee _selectedDebugee;
+        private string _searchText;
+        private ICollectionView _collectionView;
 
         public Debugee SelectedDebugee
         {
@@ -35,6 +38,24 @@ namespace DexMem
             }
         }
 
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                UpdateSearchFilter();
+            }
+        }
+
+        private void UpdateSearchFilter()
+        {
+            // refresh doesnt work, reassign filter. amazing
+            //_collectionView.Refresh();
+            _collectionView.Filter = null;
+            _collectionView.Filter = SearchFilter;
+        }
+
         public ObservableCollection<Debugee> AvailableDebugees { get; set; }
 
         public bool IsAttachEnabled => _selectedDebugee != null;
@@ -45,6 +66,21 @@ namespace DexMem
             DataContext = this;
             AvailableDebugees = new ObservableCollection<Debugee>();
             Dispatcher.InvokeAsync(() =>OnRefreshClick(null, null));
+            _collectionView = CollectionViewSource.GetDefaultView(listView.Items);
+            //_collectionView.Filter = SearchFilter;
+        }
+
+        private bool SearchFilter(object obj)
+        {
+            if (string.IsNullOrWhiteSpace(SearchText))
+                return true;
+
+            var debugee = obj as Debugee;
+            if (debugee == null)
+                return true;
+
+            var search = SearchText.ToLowerInvariant().Trim();
+            return debugee.Name.ToLowerInvariant().Contains(search);
         }
 
         private void OnAttachClick(object sender, RoutedEventArgs e)

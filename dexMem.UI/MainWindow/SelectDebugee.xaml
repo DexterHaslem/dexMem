@@ -10,9 +10,11 @@
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
        
-        <ListView ItemsSource="{Binding AvailableDebugees}"
+        <ListView x:Name="listView" 
+                  ItemsSource="{Binding AvailableDebugees}"
                   SelectedItem="{Binding SelectedDebugee}">
             <ListView.View>
                 <GridView>
@@ -23,8 +25,17 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        
+
         <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Label>Search</Label>
+            <TextBox Grid.Column="1" Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+        
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
