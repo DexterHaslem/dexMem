@@ -55,11 +55,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Imager\ImagerView.xaml.cs">
+      <DependentUpon>ImagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Imager\ImagerViewModel.cs" />
+    <Compile Include="MainWindow\MainWindowViewModel.cs" />
+    <Compile Include="NotifyPropertyChangedBase.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="MainWindow\SelectDebugee.xaml.cs">
       <DependentUpon>SelectDebugee.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow\MainWindow.xaml">
+    <Compile Include="DexStatusBar\DexStatusBar.xaml.cs">
+      <DependentUpon>DexStatusBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DexStatusBar\DexStatusBarViewModel.cs" />
+    <Page Include="Imager\ImagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow\MainWindowTabbed.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -67,11 +81,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="MainWindow\MainWindowTabbed.xaml.cs">
+      <DependentUpon>MainWindowTabbed.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MainWindow\SelectDebugee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DexStatusBar\DexStatusBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -110,9 +128,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Imager\" />
     <Folder Include="Scanner\" />
-    <Folder Include="StatusBar\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

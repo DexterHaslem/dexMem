@@ -47,8 +47,8 @@ namespace DexMem
 
         private void OnAttachClick(object sender, RoutedEventArgs e)
         {
-            SelectedDebugee.Open();
-            //DialogResult = true;
+            // let caller handle this SelectedDebugee.Open();
+            DialogResult = true;
             Close();
         }
 
