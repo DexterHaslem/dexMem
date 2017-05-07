@@ -1,4 +1,10 @@
-﻿using System.ComponentModel;
+﻿/*
+ * dexMem 
+ * Dexter Haslem <dmh@fastmail.com> 2017
+ * see the LICENSE file for licensing details
+*/
+
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using DexMem.Annotations;
 

@@ -6,15 +6,15 @@
         xmlns:local="clr-namespace:DexMem"
         xmlns:imager="clr-namespace:DexMem.Imager"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="dexMem" Height="350" Width="525">
     <DockPanel LastChildFill="True">
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
                 <Button Command="{Binding AttachCommand}" Content="{Binding AttachButtonContents}" />
             </ToolBar>
         </ToolBarTray>
-        
-        <StatusBar Height="20" DockPanel.Dock="Bottom">
+
+        <StatusBar Height="22" DockPanel.Dock="Bottom" Margin="1">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
@@ -31,15 +31,21 @@
             </StatusBar.ItemsPanel>
 
             <StatusBarItem>
-                <Label Content="{Binding DebugeeInfoStatusText}" />
+                <TextBlock Text="{Binding DebugeeInfoStatusText}" Margin="1" />
             </StatusBarItem>
-                
+
             <Separator Grid.Column="1" />
-            <StatusBarItem Grid.Column="2" />
+
+            <StatusBarItem Grid.Column="2">
+                <ProgressBar Value="30" Width="{Binding Path=ActualWidth, 
+                    RelativeSource={RelativeSource FindAncestor, AncestorType=StatusBarItem}}" Height="18"/>
+            </StatusBarItem>
+
             <Separator Grid.Column="3" />
+
             <StatusBarItem Grid.Column="4" />
         </StatusBar>
-        
+
         <TabControl IsEnabled="{Binding IsTabControlEnabled}">
             <TabItem Header="Imaging">
                 <imager:ImagerView />

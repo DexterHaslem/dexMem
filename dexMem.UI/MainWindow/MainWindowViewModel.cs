@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * dexMem 
+ * Dexter Haslem <dmh@fastmail.com> 2017
+ * see the LICENSE file for licensing details
+*/
+
+using System;
 using System.Windows;
 using System.Windows.Input;
 using DexMem.Engine;
@@ -7,9 +13,8 @@ namespace DexMem.MainWindow
 {
     public class MainWindowViewModel : NotifyPropertyChangedBase
     {
-        private MainWindowTabbed _owner;
+        private readonly MainWindowTabbed _owner;
         private bool _isTabControlEnabled;
-        private string _attachButtonContents;
         private Debugee _debugee;
 
         public bool IsTabControlEnabled
@@ -48,6 +53,7 @@ namespace DexMem.MainWindow
         {
             _owner = owner;
             owner.CommandBindings.Add(new CommandBinding(AttachCommand, OnAttachDetachExecuted));
+            DebugeeInfoStatusText = "Detached";
         }
 
         private void OnAttachDetachExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -83,7 +89,7 @@ namespace DexMem.MainWindow
 
         private void UpdateDebugeeText(Debugee debugee)
         {
-            DebugeeInfoStatusText = debugee != null ? debugee.Name : "Detached";
+            DebugeeInfoStatusText = debugee != null ? $"Attached [{debugee.Process.Id}]" : "Detached";
         }
     }
 }
