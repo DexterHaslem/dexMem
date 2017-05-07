@@ -23,12 +23,24 @@ namespace DexMem.MainWindow
             }
         }
 
-        public DexStatusBar.DexStatusBarViewModel StatusBarViewModel { get; set; }
+        public string DebugeeInfoStatusText
+        {
+            get => _debugeeInfoStatusText;
+            set
+            {
+                if (value == _debugeeInfoStatusText) return;
+                _debugeeInfoStatusText = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string AttachButtonContents => _debugee != null ? "Detach" : "Attach";
 
         // dont return a new routed command everytime
         private ICommand _attachCommand;
+
+        private string _debugeeInfoStatusText;
+
         public ICommand AttachCommand => _attachCommand ??
                                          (_attachCommand = new RoutedCommand("Attach", typeof(MainWindowViewModel)));
 
@@ -65,6 +77,13 @@ namespace DexMem.MainWindow
 
             OnPropertyChanged(nameof(AttachButtonContents));
             IsTabControlEnabled = _debugee != null;
+
+            UpdateDebugeeText(_debugee);
+        }
+
+        private void UpdateDebugeeText(Debugee debugee)
+        {
+            DebugeeInfoStatusText = debugee != null ? debugee.Name : "Detached";
         }
     }
 }

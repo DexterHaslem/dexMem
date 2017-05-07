@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DexMem"
         xmlns:imager="clr-namespace:DexMem.Imager"
-        xmlns:dexStatusBar="clr-namespace:DexMem.DexStatusBar"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <DockPanel LastChildFill="True">
@@ -31,7 +30,10 @@
 
             </StatusBar.ItemsPanel>
 
-            <StatusBarItem />
+            <StatusBarItem>
+                <Label Content="{Binding DebugeeInfoStatusText}" />
+            </StatusBarItem>
+                
             <Separator Grid.Column="1" />
             <StatusBarItem Grid.Column="2" />
             <Separator Grid.Column="3" />

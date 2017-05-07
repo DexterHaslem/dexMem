@@ -5,9 +5,11 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using DexMem.Annotations;
 using DexMem.Engine;
@@ -70,27 +72,34 @@ namespace DexMem
             AvailableDebugees.Clear();
 
             // dont reassign, that will mess up bindings
-            foreach (var debugee in Debugee.Available)
+            //foreach (var debugee in Debugee.Available)
+            // this will be slow due to all the exceptions being thrown so multithreaded
+            var debugees = new List<Debugee>();
+            Parallel.ForEach(Debugee.Available, debugee =>
             {
                 try
                 {
                     // only show running userprocesses (images)
                     // by trying to access this it will throw an exception on things like idle and system, filtering em out
                     if (debugee.Process.MainModule.ModuleName.Length < 1)
-                        continue;
+                        return;
                 }
                 catch (Win32Exception)
                 {
-                    continue;
+                    return;
                 }
                 catch (InvalidOperationException)
                 {
                     // can happen when we iterate as a process exits
-                    continue;
+                    return;
                 }
 
-                AvailableDebugees.Add(debugee);
-            }
+                lock (debugees)
+                    debugees.Add(debugee);
+            });
+
+            // have to do this on main thread
+            debugees.ForEach(AvailableDebugees.Add);
         }
     }
 }
